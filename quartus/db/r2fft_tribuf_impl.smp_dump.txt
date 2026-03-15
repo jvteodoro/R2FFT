@@ -1,0 +1,6 @@
+
+State Machine - |r2fft_tribuf_impl|R2FFT_tribuf:uR2FFT_tribuf|ibuf_status_f
+Name ibuf_status_f.IBUF_IDLE ibuf_status_f.IBUF_FULL_BUFFER ibuf_status_f.IBUF_INPUT_STREAM 
+ibuf_status_f.IBUF_IDLE 0 0 0 
+ibuf_status_f.IBUF_INPUT_STREAM 1 0 1 
+ibuf_status_f.IBUF_FULL_BUFFER 1 1 0 

@@ -1,0 +1,14 @@
+Analysis & Synthesis Status : Successful - Sun Mar 15 09:04:24 2026
+Quartus Prime Version : 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
+Revision Name : r2fft_tribuf_impl
+Top-level Entity Name : r2fft_tribuf_impl
+Family : Cyclone IV E
+Total logic elements : 2,198
+    Total combinational functions : 1,748
+    Dedicated logic registers : 902
+Total registers : 902
+Total pins : 94
+Total virtual pins : 0
+Total memory bits : 102,454
+Embedded Multiplier 9-bit elements : 6
+Total PLLs : 0

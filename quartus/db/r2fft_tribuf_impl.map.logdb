@@ -1,0 +1,4 @@
+v1
+DSP_BALANCING_IMPLEMENTATION,DSP_BLOCKS,R2FFT_tribuf:uR2FFT_tribuf|butterflyUnit:ubutterflyUnit|butterflyCore:ubutterflyCore|radix2Butterfly:uradix2bt|lpm_mult:Mult0|mult_76t:auto_generated|mac_out2,
+DSP_BALANCING_IMPLEMENTATION,DSP_BLOCKS,R2FFT_tribuf:uR2FFT_tribuf|butterflyUnit:ubutterflyUnit|butterflyCore:ubutterflyCore|radix2Butterfly:uradix2bt|lpm_mult:Mult1|mult_86t:auto_generated|mac_out2,
+DSP_BALANCING_IMPLEMENTATION,DSP_BLOCKS,R2FFT_tribuf:uR2FFT_tribuf|butterflyUnit:ubutterflyUnit|butterflyCore:ubutterflyCore|radix2Butterfly:uradix2bt|lpm_mult:Mult2|mult_86t:auto_generated|mac_out2,
