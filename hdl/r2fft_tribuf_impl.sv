@@ -1,4 +1,3 @@
-
 module r2fft_tribuf_impl
   #(
     parameter FFT_LENGTH = 512, // FFT Frame Length, 2^N

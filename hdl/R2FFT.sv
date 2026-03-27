@@ -1,9 +1,7 @@
-
 /* 
  Configurable Radix-2 FFT Processor
  with Block Floating-Point
  **/
-
 module R2FFT
   #(
     parameter FFT_LENGTH = 1024, // FFT Frame Length, 2^N
