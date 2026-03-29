@@ -21,7 +21,7 @@ module bfp_bitWidthAcc
 
    always @ ( posedge clk ) begin
       if ( rst ) begin
-         bfp_bw_f <= 5'h0;
+         bfp_bw_f <= '0;
       end else if ( init ) begin
          bfp_bw_f <= bw_init;
       end else if ( update) begin
@@ -35,11 +35,11 @@ module bfp_bitWidthAcc
    
    always_comb begin
       if ( bw == FFT_DW ) begin
-         bfp_scale = 5'h01;
-      end else if ( bw == 5'h0 ) begin
-         bfp_scale = 5'h00;
+         bfp_scale = $signed((FFT_BFPDW+1)'(1));
+      end else if ( bw == '0 ) begin
+         bfp_scale = '0;
       end else begin
-         bfp_scale = bw - (FFT_DW-2);
+         bfp_scale = $signed({1'b0, bw}) - $signed((FFT_BFPDW+1)'(FFT_DW-2));
       end
    end
 
@@ -55,7 +55,7 @@ module bfp_bitWidthAcc
       if ( rst ) begin
          bfp_exponent_signed <= 8'h0;
       end else if ( init ) begin
-         bfp_exponent_signed <= bfp_scale;
+         bfp_exponent_signed <= $signed(8'(bfp_scale));
       end else if ( update ) begin
          bfp_exponent_signed <= bfp_exponent_signed + bfp_scale;
       end

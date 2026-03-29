@@ -31,6 +31,9 @@ module r2fft_tribuf_impl
    
    );
 
+      localparam integer IP_SAMPLE_DW = 16;
+      localparam integer IP_COMPLEX_DW = 32;
+
 
    reg 				   rst; 
    reg 				   run;
@@ -86,58 +89,93 @@ module r2fft_tribuf_impl
    wire 			   twact;
    wire [FFT_N-1-2:0] twa;
    wire [FFT_DW-1:0] 		   twdr_cos;
+   wire [IP_SAMPLE_DW-1:0] twdr_cos_ip;
     
    // block ram0
    // bank0
    wire 			   ract_ram0_bank0;
    wire [FFT_N-1-1:0] 		   ra_ram0_bank0;
    wire [FFT_DW*2-1:0] 		   rdr_ram0_bank0;
+   wire [IP_COMPLEX_DW-1:0]       rdr_ram0_bank0_ip;
    // bank1
    wire 			   wact_ram0_bank1;
    wire [FFT_N-1-1:0] 		   wa_ram0_bank1;
    wire [FFT_DW*2-1:0] 		   wdw_ram0_bank1;
+   wire [IP_COMPLEX_DW-1:0]       wdw_ram0_bank1_ip;
    // bank2
    wire 			   ract_ram0_bank2;
    wire [FFT_N-1-1:0] 		   ra_ram0_bank2;
    wire [FFT_DW*2-1:0] 		   rdr_ram0_bank2;
+   wire [IP_COMPLEX_DW-1:0]       rdr_ram0_bank2_ip;
    // bank0
    wire 			   wact_ram0_bank0;
    wire [FFT_N-1-1:0] 		   wa_ram0_bank0;
    wire [FFT_DW*2-1:0] 		   wdw_ram0_bank0;
+   wire [IP_COMPLEX_DW-1:0]       wdw_ram0_bank0_ip;
    // bank1
    wire 			   ract_ram0_bank1;
    wire [FFT_N-1-1:0] 		   ra_ram0_bank1;
    wire [FFT_DW*2-1:0] 		   rdr_ram0_bank1;
+   wire [IP_COMPLEX_DW-1:0]       rdr_ram0_bank1_ip;
    // bank2
    wire 			   wact_ram0_bank2;
    wire [FFT_N-1-1:0] 		   wa_ram0_bank2;
    wire [FFT_DW*2-1:0] 		   wdw_ram0_bank2;
+   wire [IP_COMPLEX_DW-1:0]       wdw_ram0_bank2_ip;
    
    // block ram1
    // bank0
    wire 			   ract_ram1_bank0;
    wire [FFT_N-1-1:0] 		   ra_ram1_bank0;
    wire [FFT_DW*2-1:0] 		   rdr_ram1_bank0;
+   wire [IP_COMPLEX_DW-1:0]       rdr_ram1_bank0_ip;
    // bank1
    wire 			   wact_ram1_bank1;
    wire [FFT_N-1-1:0] 		   wa_ram1_bank1;
    wire [FFT_DW*2-1:0] 		   wdw_ram1_bank1;
+   wire [IP_COMPLEX_DW-1:0]       wdw_ram1_bank1_ip;
    // bank2
    wire 			   ract_ram1_bank2;
    wire [FFT_N-1-1:0] 		   ra_ram1_bank2;
    wire [FFT_DW*2-1:0] 		   rdr_ram1_bank2;
+   wire [IP_COMPLEX_DW-1:0]       rdr_ram1_bank2_ip;
    // bank0
    wire 			   wact_ram1_bank0;
    wire [FFT_N-1-1:0] 		   wa_ram1_bank0;
    wire [FFT_DW*2-1:0] 		   wdw_ram1_bank0;
+   wire [IP_COMPLEX_DW-1:0]       wdw_ram1_bank0_ip;
     // bank1
    wire 			   ract_ram1_bank1;
    wire [FFT_N-1-1:0] 		   ra_ram1_bank1;
    wire [FFT_DW*2-1:0] 		   rdr_ram1_bank1;
+   wire [IP_COMPLEX_DW-1:0]       rdr_ram1_bank1_ip;
    // bank2
    wire 			   wact_ram1_bank2;
    wire [FFT_N-1-1:0] 		   wa_ram1_bank2;
    wire [FFT_DW*2-1:0] 		   wdw_ram1_bank2; 
+   wire [IP_COMPLEX_DW-1:0]       wdw_ram1_bank2_ip;
+
+   assign twdr_cos = {{(FFT_DW-IP_SAMPLE_DW){twdr_cos_ip[IP_SAMPLE_DW-1]}}, twdr_cos_ip};
+
+   assign rdr_ram0_bank0 = {{(FFT_DW-IP_SAMPLE_DW){rdr_ram0_bank0_ip[31]}}, rdr_ram0_bank0_ip[31:16],
+                            {(FFT_DW-IP_SAMPLE_DW){rdr_ram0_bank0_ip[15]}}, rdr_ram0_bank0_ip[15:0]};
+   assign rdr_ram0_bank1 = {{(FFT_DW-IP_SAMPLE_DW){rdr_ram0_bank1_ip[31]}}, rdr_ram0_bank1_ip[31:16],
+                            {(FFT_DW-IP_SAMPLE_DW){rdr_ram0_bank1_ip[15]}}, rdr_ram0_bank1_ip[15:0]};
+   assign rdr_ram0_bank2 = {{(FFT_DW-IP_SAMPLE_DW){rdr_ram0_bank2_ip[31]}}, rdr_ram0_bank2_ip[31:16],
+                            {(FFT_DW-IP_SAMPLE_DW){rdr_ram0_bank2_ip[15]}}, rdr_ram0_bank2_ip[15:0]};
+   assign rdr_ram1_bank0 = {{(FFT_DW-IP_SAMPLE_DW){rdr_ram1_bank0_ip[31]}}, rdr_ram1_bank0_ip[31:16],
+                            {(FFT_DW-IP_SAMPLE_DW){rdr_ram1_bank0_ip[15]}}, rdr_ram1_bank0_ip[15:0]};
+   assign rdr_ram1_bank1 = {{(FFT_DW-IP_SAMPLE_DW){rdr_ram1_bank1_ip[31]}}, rdr_ram1_bank1_ip[31:16],
+                            {(FFT_DW-IP_SAMPLE_DW){rdr_ram1_bank1_ip[15]}}, rdr_ram1_bank1_ip[15:0]};
+   assign rdr_ram1_bank2 = {{(FFT_DW-IP_SAMPLE_DW){rdr_ram1_bank2_ip[31]}}, rdr_ram1_bank2_ip[31:16],
+                            {(FFT_DW-IP_SAMPLE_DW){rdr_ram1_bank2_ip[15]}}, rdr_ram1_bank2_ip[15:0]};
+
+   assign wdw_ram0_bank0_ip = {wdw_ram0_bank0[FFT_DW*2-1 -: IP_SAMPLE_DW], wdw_ram0_bank0[FFT_DW-1 -: IP_SAMPLE_DW]};
+   assign wdw_ram0_bank1_ip = {wdw_ram0_bank1[FFT_DW*2-1 -: IP_SAMPLE_DW], wdw_ram0_bank1[FFT_DW-1 -: IP_SAMPLE_DW]};
+   assign wdw_ram0_bank2_ip = {wdw_ram0_bank2[FFT_DW*2-1 -: IP_SAMPLE_DW], wdw_ram0_bank2[FFT_DW-1 -: IP_SAMPLE_DW]};
+   assign wdw_ram1_bank0_ip = {wdw_ram1_bank0[FFT_DW*2-1 -: IP_SAMPLE_DW], wdw_ram1_bank0[FFT_DW-1 -: IP_SAMPLE_DW]};
+   assign wdw_ram1_bank1_ip = {wdw_ram1_bank1[FFT_DW*2-1 -: IP_SAMPLE_DW], wdw_ram1_bank1[FFT_DW-1 -: IP_SAMPLE_DW]};
+   assign wdw_ram1_bank2_ip = {wdw_ram1_bank2[FFT_DW*2-1 -: IP_SAMPLE_DW], wdw_ram1_bank2[FFT_DW-1 -: IP_SAMPLE_DW]};
 
    //
    R2FFT_tribuf
@@ -231,7 +269,7 @@ module r2fft_tribuf_impl
      (
       .address( twa ),
       .clock( clk ),
-      .q( twdr_cos )
+         .q( twdr_cos_ip )
       );
 
    /////////////////////////////////////
@@ -239,66 +277,66 @@ module r2fft_tribuf_impl
    dpram ram0bank0
      (
       .clock( clk ),
-      .data( wdw_ram0_bank0 ),
+         .data( wdw_ram0_bank0_ip ),
       .rdaddress( ra_ram0_bank0 ),
       .wraddress( wa_ram0_bank0 ),
       .wren( wact_ram0_bank0 ),
-      .q( rdr_ram0_bank0 )
+         .q( rdr_ram0_bank0_ip )
       );
    //////////////////
 
    dpram ram1bank0
      (
       .clock( clk ),
-      .data( wdw_ram1_bank0 ),
+         .data( wdw_ram1_bank0_ip ),
       .rdaddress( ra_ram1_bank0 ),
       .wraddress( wa_ram1_bank0 ),
       .wren( wact_ram1_bank0 ),
-      .q( rdr_ram1_bank0 )
+         .q( rdr_ram1_bank0_ip )
       );
    //////////////////
 
    dpram ram0bank1
      (
       .clock( clk ),
-      .data( wdw_ram0_bank1 ),
+         .data( wdw_ram0_bank1_ip ),
       .rdaddress( ra_ram0_bank1 ),
       .wraddress( wa_ram0_bank1 ),
       .wren( wact_ram0_bank1 ),
-      .q( rdr_ram0_bank1 )
+         .q( rdr_ram0_bank1_ip )
       );
    //////////////////
 
    dpram ram1bank1
      (
       .clock( clk ),
-      .data( wdw_ram1_bank1 ),
+         .data( wdw_ram1_bank1_ip ),
       .rdaddress( ra_ram1_bank1 ),
       .wraddress( wa_ram1_bank1 ),
       .wren( wact_ram1_bank1 ),
-      .q( rdr_ram1_bank1 )
+         .q( rdr_ram1_bank1_ip )
       );
    //////////////////
 
    dpram ram0bank2
      (
       .clock( clk ),
-      .data( wdw_ram0_bank2 ),
+         .data( wdw_ram0_bank2_ip ),
       .rdaddress( ra_ram0_bank2 ),
       .wraddress( wa_ram0_bank2 ),
       .wren( wact_ram0_bank2 ),
-      .q( rdr_ram0_bank2 )
+         .q( rdr_ram0_bank2_ip )
       );
    //////////////////
 
    dpram ram1bank2
      (
       .clock( clk ),
-      .data( wdw_ram1_bank2 ),
+         .data( wdw_ram1_bank2_ip ),
       .rdaddress( ra_ram1_bank2 ),
       .wraddress( wa_ram1_bank2 ),
       .wren( wact_ram1_bank2 ),
-      .q( rdr_ram1_bank2 )
+         .q( rdr_ram1_bank2_ip )
       );
    //////////////////
 

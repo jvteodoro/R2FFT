@@ -18,15 +18,17 @@ module fftAddressGenerator
    output wire [FFT_N-1-1:0] twiddleFactorAddr
    
    );
+
+   localparam [FFT_N-1:0] ONE_FFT_N = {{(FFT_N-1){1'b0}}, 1'b1};
    
    reg [FFT_N-1-1:0] runCount;
-   wire [FFT_N-1-1:0] runCount_pp = runCount + 1;
+   wire [FFT_N-1-1:0] runCount_pp = runCount + 1'b1;
    wire       runCount_full = &runCount;
    assign evenOdd  = runCount[0];
    
    always @ ( posedge clk ) begin
       if ( rst ) begin
-         runCount <= 0;
+         runCount <= '0;
       end else if ( run ) begin
          if ( runCount_full ) begin
             runCount <= runCount;
@@ -34,7 +36,7 @@ module fftAddressGenerator
             runCount <= runCount_pp;
          end
       end else begin
-         runCount <= 0;
+         runCount <= '0;
       end
    end // always @ ( posedge clk )
 
@@ -75,9 +77,9 @@ module fftAddressGenerator
    always_comb begin
       if ( (stageCount == 0) ||
 	   (stageCount == 1) ) begin
-	 memAddrLowerMask_ = 0;
+	 memAddrLowerMask_ = '0;
       end else begin
-	 memAddrLowerMask_ = (('b01) << (stageCount-1)) - 1;
+	 memAddrLowerMask_ = (ONE_FFT_N << (stageCount-1'b1)) - 1'b1;
       end
    end
    
@@ -85,9 +87,9 @@ module fftAddressGenerator
    always_comb begin
       if ( (stageCount == 0) ||
 	   (stageCount == 1) ) begin
-	 runCountLsbShift_ = 0;
+	 runCountLsbShift_ = '0;
       end else begin
-	 runCountLsbShift_ = ( runCount[0] << (stageCount-1) );
+	 runCountLsbShift_ = ( runCount[0] << (stageCount-1'b1) );
       end
    end
 
@@ -95,20 +97,20 @@ module fftAddressGenerator
    always_comb begin
       if ( (stageCount == 0) ||
 	   (stageCount == 1) ) begin
-	 memAddrHigherMask_ = -1;
+	 memAddrHigherMask_ = '1;
       end else begin
-	 memAddrHigherMask_ = ~(('b01 << (stageCount)) - 1);
+	 memAddrHigherMask_ = ~((ONE_FFT_N << stageCount) - 1'b1);
       end
    end   
    always_comb begin
       case ( stageCount )
-	0,1: memAddr_w = runCount;
+   STAGE_COUNT_BW'(0),STAGE_COUNT_BW'(1): memAddr_w = runCount;
 	default:
 	  begin
 	     memAddr_w = 
-			 (memAddrLowerMask_  & {1'b0,runCount[FFT_N-1-1:1]} )|
+          (memAddrLowerMask_[FFT_N-1-1:0]  & {1'b0,runCount[FFT_N-1-1:1]} )|
 			 (runCountLsbShift_)|
-			 (memAddrHigherMask_ & runCount[FFT_N-1-1:0]);
+          (memAddrHigherMask_[FFT_N-1-1:0] & runCount[FFT_N-1-1:0]);
 	  end
       endcase
    end

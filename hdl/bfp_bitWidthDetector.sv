@@ -18,7 +18,7 @@ module bfp_bitWidthDetector
       input [FFT_DW-1:0]   operand;
       begin
          ToAbsValue = (operand[FFT_DW-1] == 1'b1) ?
-                           (0 - operand[FFT_DW-1:0]) :
+                           ({FFT_DW{1'b0}} - operand[FFT_DW-1:0]) :
                            (operand[FFT_DW-1:0]);
       end
    endfunction
@@ -34,7 +34,7 @@ module bfp_bitWidthDetector
       bw_r = 0;
       for ( i = (FFT_DW-1); i >= 0; i-- ) begin
          if ( operand_abs[i] ) begin
-            bw_r = i + 1;
+            bw_r = FFT_BFPDW'(i + 1);
             break; // generate priority logic
          end
       end

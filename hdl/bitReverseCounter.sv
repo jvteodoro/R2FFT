@@ -23,7 +23,7 @@ module bitReverseCounter
       end else if ( clr ) begin
          ptr_f <= {BIT_WIDTH{1'b0}};
       end else if ( inc ) begin
-         ptr_f <= ptr_f + 1;
+         ptr_f <= ptr_f + 1'b1;
       end
    end
 

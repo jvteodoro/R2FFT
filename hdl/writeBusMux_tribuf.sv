@@ -3,14 +3,14 @@ module writeBusMux_tribuf
     parameter FFT_N = 10,
     parameter FFT_DW = 16,
 
-    parameter PHASE_0 = 0,
-    parameter PHASE_1 = 1,
-    parameter PHASE_2 = 2,
+    parameter [1:0] PHASE_0 = 2'd0,
+    parameter [1:0] PHASE_1 = 2'd1,
+    parameter [1:0] PHASE_2 = 2'd2,
     
-    parameter MODE_INPUT_STREAM = 0,
-    parameter MODE_RUN_FFT = 1,
-    parameter MODE_DMA = 2,
-    parameter MODE_DISABLE = 3
+    parameter [1:0] MODE_INPUT_STREAM = 2'd0,
+    parameter [1:0] MODE_RUN_FFT = 2'd1,
+    parameter [1:0] MODE_DMA = 2'd2,
+    parameter [1:0] MODE_DISABLE = 2'd3
     )
   (
    input wire [1:0] 	     tribuf_status,

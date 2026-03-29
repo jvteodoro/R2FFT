@@ -407,11 +407,11 @@ module R2FFT_tribuf
 
    always @ ( posedge clk ) begin
       if ( rst ) begin
-         fftStageCount <= 0;
+         fftStageCount <= '0;
       end else begin
          case ( sb_state_f )
-           SB_IDLE,SB_SETUP: fftStageCount <= 0;
-           SB_NEXT_STAGE:    fftStageCount <= fftStageCount + 1;
+           SB_IDLE,SB_SETUP: fftStageCount <= '0;
+           SB_NEXT_STAGE:    fftStageCount <= fftStageCount + 1'b1;
          endcase // case ( sb_state_f )
       end
    end

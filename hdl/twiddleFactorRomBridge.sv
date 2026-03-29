@@ -52,7 +52,7 @@ module twiddleFactorRomBridge
          
          tact_1 <= tact_rom;
          ta_msb_1 <= ta_rom[FFT_N-1-1];
-         sinAddr <= {1'b1,{(FFT_N-1-1){1'b0}}} - ta_rom[FFT_N-1-2:0];
+         sinAddr <= {1'b1,{(FFT_N-1-2){1'b0}}} - ta_rom[FFT_N-1-2:0];
          evenOdd_1 <= evenOdd;
          
          tact_2 <= tact_1;
@@ -77,7 +77,7 @@ module twiddleFactorRomBridge
    end
    
    wire signed [FFT_DW:0] cosReadData = {1'b0, twdr_cos};
-   wire signed [FFT_DW:0] sinReadData = sin0 ? 0 : {1'b0, twdr_cos};
+   wire signed [FFT_DW:0] sinReadData = sin0 ? '0 : {1'b0, twdr_cos};
 
    reg signed [FFT_DW:0]  cosReadData_1;
    reg signed [FFT_DW:0]  cosReadData_2;
